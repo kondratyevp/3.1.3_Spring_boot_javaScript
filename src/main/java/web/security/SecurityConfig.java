@@ -29,12 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
-                //.loginPage("/login")
+                .loginPage("/login")
                 .successHandler(successUserHandler)
                 .failureUrl("/login?error=true")
-                .loginProcessingUrl("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
+                //.loginProcessingUrl("/login")
+                .usernameParameter("user")
+                .passwordParameter("pass")
                 .permitAll();
 
         http.logout()

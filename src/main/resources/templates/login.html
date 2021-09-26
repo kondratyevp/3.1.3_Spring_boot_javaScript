@@ -3,13 +3,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
 </head>
 <body>
-    <form method="post" action="/login">
-        <input name="username"/>
-        <input name="password"/>
-        <input type="submit"/>
-    </form>
+<div>
+  <form name="f" th:action="@{/login}" method="post">
+    <fieldset>
+      <legend>Войти</legend>
+      <label for="user">Имя</label>
+      <input type="text" id="user" name="user"/>
+      <label for="pass">Пароль</label>
+      <input type="password" id="pass" name="pass"/>
+      <div class="form-actions">
+        <button type="submit" class="btn">Войти</button>
+      </div>
+    </fieldset>
+  </form>
+</div>
 </body>
 </html>

@@ -99,4 +99,9 @@ public class ControllerSpringBoot {
         return "user";
     }
 
+    @GetMapping("/login")
+    public String get(Model model) {
+        return "login";
+    }
+
 }
