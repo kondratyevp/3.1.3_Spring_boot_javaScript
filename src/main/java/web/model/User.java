@@ -21,7 +21,11 @@ public class User implements UserDetails {
 
     private int age;
 
+
+
     private String password;
+
+    private String email;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinTable(name = "users_roles",
@@ -31,11 +35,12 @@ public class User implements UserDetails {
 
     public User(){}
 
-    public User(String name, String lastName, int age, String password, Set<Role> roles) {
+    public User(String name, String lastName, int age, String password, String email, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
         this.password = password;
+        this.email = email;
         this.roles = roles;
     }
 
@@ -88,6 +93,14 @@ public class User implements UserDetails {
 
     public Long getId() {
         return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setId(Long id) {
