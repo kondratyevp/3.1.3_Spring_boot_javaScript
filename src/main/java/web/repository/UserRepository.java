@@ -5,6 +5,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
 import web.model.User;
 
+import java.util.List;
+
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findUserById (long id);

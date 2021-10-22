@@ -26,31 +26,11 @@ public class AdminController {
 
     @GetMapping("/users")
     public String listUsers(Model model, Principal principal) {
-        Iterable <User> allUsers = userService.getAllUsers();
-        model.addAttribute("allusers", allUsers);
+//        Iterable <User> allUsers = userService.getAllUsers();
+//        model.addAttribute("allusers", allUsers);
         model.addAttribute("allRoles", roleService.getAllRoles());
         model.addAttribute("thisUser", userService.loadUserByUsername(principal.getName()));
         return "users";
-    }
-
-    @GetMapping ("/admin/new")
-    public String newUser (Model model) {
-        model.addAttribute("user", new User());
-        return "new";
-    }
-
-    @PostMapping("/admin/new")
-    public String create (@ModelAttribute("newUser") User user,
-                          @RequestParam(required=false) String roleAdmin){
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleService.getRoleByRole("ROLE_USER"));
-        if (roleAdmin != null && roleAdmin.equals("ROLE_ADMIN")) {
-            roles.add(roleService.getRoleByRole("ROLE_ADMIN"));
-        }
-        user.setRoles(roles);
-
-        userService.add(user);
-        return "redirect:/users";
     }
 
     @GetMapping ("/admin/{id}/edit")
@@ -84,15 +64,10 @@ public class AdminController {
     }
 
 
-    @DeleteMapping ("/admin/users/{id}")
-    public String delete (@PathVariable ("id") int id) {
-        userService.delete((long) id);
-        return "redirect:/users";
-    }
-
     @GetMapping("/login")
     public String get(Model model) {
         return "login";
     }
+
 
 }

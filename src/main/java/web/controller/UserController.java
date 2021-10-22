@@ -21,10 +21,10 @@ public class UserController {
         return "user";
     }
 
-    @GetMapping("/{id}")
-        public String showUser (@PathVariable("id") long id, Model model){
-        model.addAttribute("user", userService.findUserById(id));
-        return "user";
+
+    @GetMapping(value = "/user")
+    public String user() {
+        return "userPage";
     }
 
 }

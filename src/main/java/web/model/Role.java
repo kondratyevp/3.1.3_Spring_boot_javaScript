@@ -1,5 +1,9 @@
 package web.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -7,14 +11,19 @@ import java.util.Set;
 
 @Entity
 @Table (name = "roles")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 public class Role implements GrantedAuthority {
 
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String role;
 
+    @JsonBackReference
     @ManyToMany (mappedBy = "roles")
     private Set <User> users;
 
@@ -53,6 +62,7 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
+    @JsonIgnore
     @Override
     public String getAuthority() {
         return getRole();
