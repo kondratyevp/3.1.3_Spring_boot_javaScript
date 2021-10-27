@@ -2,48 +2,63 @@ package web.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
-import web.service.RoleService;
+import web.service.RoleServiceImp;
 import web.service.UserService;
+import web.service.UserServiceImp;
 
 import java.util.List;
 
 @RestController
 public class AdminRestController {
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private RoleService roleService;
+    private final UserService userService;
+
+    public AdminRestController(UserService userService) {
+        this.userService = userService;
+    }
+
+//    @Autowired
+//    private RoleServiceImp roleService;
 
     @GetMapping("/usersRest")
         public List <User> getAllUsers() {
         return userService.getAllUsers();
-//        return "users";
         }
 
-    @PostMapping ("/admin/new")
-    public User addNewUser (@RequestBody User user){
+    @PostMapping(value = "/admin/new")
+    public ResponseEntity<?> addNewUser(@RequestBody User user) {
         userService.add(user);
-        return user;
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 
     @PutMapping ("/users")
-    public User updateUser (@RequestBody User user){
-        userService.edit(user);
-        return user;
+    public ResponseEntity<?> updateUser (@RequestBody User user){
+        boolean edited = userService.edit(user);
+        return edited
+                ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
+
 
     @DeleteMapping ("/admin/users/{id}")
-    public void deleteUser (@PathVariable long id){
+    public ResponseEntity<?> deleteUser (@PathVariable long id){
         userService.delete(id);
-//        return "User with id=" + id +" was delete";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public User getOne(@PathVariable long id) {
-        return userService.findUserById(id);
+
+    @GetMapping ("/{id}")
+    public ResponseEntity<?> getOne (@PathVariable long id){
+        final User user = userService.findUserById(id);
+        return user != null
+                ? new ResponseEntity<>(user, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
 }

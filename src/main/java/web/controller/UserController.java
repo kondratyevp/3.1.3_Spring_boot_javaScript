@@ -1,10 +1,8 @@
 package web.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import web.service.UserService;
 
 import java.security.Principal;
@@ -12,8 +10,11 @@ import java.security.Principal;
 @Controller
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping(value = "/user/lk")
     public String getUserPage (Model model, Principal principal) {
@@ -22,9 +23,9 @@ public class UserController {
     }
 
 
-    @GetMapping(value = "/user")
-    public String user() {
-        return "userPage";
-    }
+//    @GetMapping(value = "/user")
+//    public String user() {
+//        return "userPage";
+//    }
 
 }

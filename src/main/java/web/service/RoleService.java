@@ -1,26 +1,13 @@
 package web.service;
 
-import org.springframework.stereotype.Service;
 import web.model.Role;
-import web.repository.RoleRepository;
 
 import java.util.List;
 
-@Service
-public class RoleService {
+public interface RoleService {
 
-    private final RoleRepository roleRepository;
+    Role getRoleByRole(String role);
 
-    public RoleService(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
-
-    public Role getRoleByRole (String role){
-        return roleRepository.getRoleByRole(role);
-    }
-
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
-    }
-
+    List<Role> getAllRoles();
 }
+
